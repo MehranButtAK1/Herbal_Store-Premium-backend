@@ -6,10 +6,11 @@ const cors = require("cors");
 dotenv.config();
 const app = express();
 
+// Middleware
 app.use(express.json());
 app.use(cors());
 
-// MongoDB Atlas Connect (from Railway ENV)
+// MongoDB Connect
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -18,19 +19,18 @@ mongoose
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB Error:", err));
 
+// Import Routes
+const productRoutes = require("./routes/productRoutes");
+app.use("/api/products", productRoutes);
+
 // Root Route
 app.get("/", (req, res) => {
   res.send("🚀 Herbal Store Backend is Running...");
 });
 
-// Health Check Route
+// Health Check
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
-});
-
-// Example Products Route
-app.get("/api/products", (req, res) => {
-  res.json([{ id: 1, name: "Herbal Tea" }, { id: 2, name: "Honey" }]);
 });
 
 // Server Listen
