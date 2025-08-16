@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // MongoDB Atlas se connect
-const uri = "mongodb+srv://mehranbuttk:!MehranMehranButt2004!@cluster0.sjlhqeb.mongodb.net/herbalstore?retryWrites=true&w=majority&appName=Cluster0";
+const uri = process.env.MONGO_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ MongoDB Connected"))
